@@ -41,7 +41,7 @@ export default function ChatWindow({
 
     const text = draft.trim();
 
-    if (!text || !connected) return;
+    if (!text || !connected || text.length > 2000) return;
 
     onSendMessage(text);
     setDraft("");
@@ -58,8 +58,8 @@ export default function ChatWindow({
             Welcome to ConnectChat
           </h2>
           <p className="mt-2 text-sm leading-6 text-slate-400">
-            Select a conversation to start chatting across your
-            distributed network.
+            Select a conversation to start chatting across your distributed
+            network.
           </p>
         </div>
       </main>
@@ -98,8 +98,7 @@ export default function ChatWindow({
             {contact.name}
           </h2>
           <p className="mt-1 truncate text-xs text-slate-500">
-            {contact.node} ·{" "}
-            {contact.online ? "Online" : "Offline"}
+            {contact.node} · {contact.online ? "Online" : "Offline"}
           </p>
         </div>
 
@@ -134,15 +133,13 @@ export default function ChatWindow({
       >
         <div className="flex justify-center">
           <span className="rounded-full border border-slate-800 bg-slate-950/60 px-3 py-1.5 text-[10px] text-slate-500">
-            Conversation with {contact.name}
+            Shared distributed chat room
           </span>
         </div>
 
         {messages.length === 0 ? (
           <div className="m-auto max-w-xs py-8 text-center">
-            <p className="text-sm text-slate-400">
-              No messages yet.
-            </p>
+            <p className="text-sm text-slate-400">No messages yet.</p>
             <p className="mt-1 text-xs text-slate-600">
               Send a message to start the conversation.
             </p>
@@ -190,7 +187,7 @@ export default function ChatWindow({
               }
             }}
             rows={1}
-            maxLength={4000}
+            maxLength={2000}
             placeholder={
               connected
                 ? `Message ${contact.name}...`
